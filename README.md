@@ -29,22 +29,22 @@ It handles every step from remote dump to local restore, migration, and privileg
 
 ## ⚙️ Configuration
 
-Edit the top of `sync_and_migrate.ps1`:
+Edit the top of `sync_and_migrate.ps1` and update placeholders to match your setup:
 
 ```powershell
-$RemoteUser = "your_remote_user"
-$RemoteHost = "your.server.ip"
+$RemoteUser = "<remote_ssh_user>"
+$RemoteHost = "<remote_host_or_ip>"
 $RemotePort = 22
-$RemoteDb   = "trader_db"
+$RemoteDb   = "<remote_database_name>"
 
-$DbUser = "postgres"
-$DbName = "trader_db"
-$ProjectRoot = "C:\Path\To\Your\DjangoProject"
+$DbUser = "<local_postgres_superuser>"
+$DbName = "<local_database_name>"
+$ProjectRoot = "C:\Path\To\Your\Project"
 ```
 
 If you use a Django app with a specific database role, update:
 ```powershell
-$AppRoleFallback = "traderuser"
+$AppRoleFallback = "<django_app_db_user>"
 ```
 
 ---
@@ -53,15 +53,15 @@ $AppRoleFallback = "traderuser"
 
 1. Open **PowerShell** and run:
    ```powershell
-   cd "C:\Users\<You>\Desktop\DBsync"
+   cd "C:\Path\To\DBsync"
    .\sync_and_migrate.ps1
    ```
 2. The script will:
    - Create a remote dump on the server
    - Copy it locally via `scp`
-   - Drop & recreate your local DB
+   - Drop & recreate your local database
    - Restore the dump atomically
-   - Run Django migrations (if project path is valid)
+   - Run Django migrations (if configured)
    - Apply and refresh all database privileges
    - Verify key data and clean up dump files
 
@@ -82,10 +82,10 @@ $AppRoleFallback = "traderuser"
 ## 🧱 Example Output
 
 ```
-== Step 1: create dump on remote (trader_db) ==
+== Step 1: create dump on remote ==
 == Step 2: scp dump to Windows ==
-   Copied to C:\Users\...\pgsync\trader_db_20251017.dump (44.1 MB)
-== Step 3: drop & recreate local DB (trader_db) ==
+   Copied to C:\Users\...\pgsync\remote_db_20251017.dump (44.1 MB)
+== Step 3: drop & recreate local DB ==
    Local DB recreated.
 == Step 4: restore into local DB (atomic) ==
    Restore completed.
@@ -113,4 +113,4 @@ Done.
 
 ## 📄 License
 
-MIT License © 2025 [AMMorsy](https://github.com/AMMorsy)
+MIT License © 2025
