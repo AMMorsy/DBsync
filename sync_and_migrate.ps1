@@ -4,29 +4,45 @@
 # ====================================================================
 
 # -------------------- CONFIG --------------------
-$RemoteUser = "renga"
-$RemoteHost = "78.47.189.23"
-$RemotePort = 22
-$RemoteDb   = "trader_db"                    # remote DB name
+# 🔧 CHANGE ME: remote SSH user (on the server that hosts Postgres)
+$RemoteUser = "<remote_ssh_user>"            # e.g., "ubuntu" or "postgres"
 
-$PgBin  = "C:\Program Files\PostgreSQL\17\bin"  # local Postgres 17 bin
-$DbUser = "postgres"                             # local superuser
-$DbName = "trader_db"                            # local DB name to replace
+# 🔧 CHANGE ME: remote server IP / hostname (where the remote DB lives)
+$RemoteHost = "<remote_host_or_ip>"          # e.g., "203.0.113.10"
 
-$ProjectRoot = "C:\Users\Sharks\Desktop\Trader"  # Django project folder
+# 🔧 CHANGE ME: SSH port for that server
+$RemotePort = 22                             # usually 22
+
+# 🔧 CHANGE ME: remote PostgreSQL database name (to dump from)
+$RemoteDb   = "<remote_db_name>"             # e.g., "new_db"
+
+# 🔧 CHANGE ME (optional): local Postgres bin folder (psql/pg_restore/createdb)
+# If you installed PostgreSQL 17 in default path, this is correct. Otherwise update.
+$PgBin  = "C:\Program Files\PostgreSQL\17\bin"
+
+# 🔧 CHANGE ME: local Postgres superuser (the owner we use for recreate/restore)
+$DbUser = "postgres"                         # e.g., "postgres"
+
+# 🔧 CHANGE ME: local database name to DROP + RECREATE + RESTORE INTO
+$DbName = "<local_db_name>"                  # e.g., "new_db"
+
+# 🔧 CHANGE ME: local Django project folder (only if you want migrations run)
+$ProjectRoot = "C:\Users\<YourUser>\Desktop\<project_name>"  # e.g., C:\Users\Mody\Desktop\Trader
 $Python      = Join-Path $ProjectRoot ".venv\Scripts\python.exe"
 $ManagePy    = Join-Path $ProjectRoot "manage.py"
 
 # Which Django DB user should have privileges locally.
 # If empty, we try to auto-detect from Django settings; if that fails,
 # we fall back to this default:
-$AppRoleFallback = "traderuser"
+# 🔧 CHANGE ME: the DB role your Django app uses locally (if auto-detect fails)
+$AppRoleFallback = "<app_db_user>"           # e.g., "newuser"
 
 # Keep dumps? (set to $true if you want to keep either)
 $KeepRemoteDump = $false
 $KeepLocalDump  = $false
 
 # Optional: avoid local password prompts for postgres superuser
+# 🔐 If needed: uncomment and set your local postgres password temporarily for this session
 # $env:PGPASSWORD = "YOUR_LOCAL_POSTGRES_PASSWORD"
 
 $LocalDir = "$env:USERPROFILE\Downloads\pgsync"
