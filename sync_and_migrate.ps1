@@ -27,7 +27,7 @@ $DbUser = "postgres"                         # e.g., "postgres"
 $DbName = "<local_db_name>"                  # e.g., "new_db"
 
 # 🔧 CHANGE ME: local Django project folder (only if you want migrations run)
-$ProjectRoot = "C:\Users\<YourUser>\Desktop\<project_name>"  # e.g., C:\Users\Mody\Desktop\Trader
+$ProjectRoot = "C:\Users\<YourUser>\Desktop\<project_name>"  # e.g., C:\Users\Mody\Desktop\project_name
 $Python      = Join-Path $ProjectRoot ".venv\Scripts\python.exe"
 $ManagePy    = Join-Path $ProjectRoot "manage.py"
 
